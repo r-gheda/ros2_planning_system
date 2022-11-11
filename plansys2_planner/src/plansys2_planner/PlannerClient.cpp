@@ -33,7 +33,7 @@ PlannerClient::PlannerClient()
 std::optional<plansys2_msgs::msg::Plan>
 PlannerClient::getPlan(
   const std::string & domain, const std::string & problem,
-  const std::string & node_namespace)
+  const std::string & node_namespace, const int & timeout)
 {
   while (!get_plan_client_->wait_for_service(std::chrono::seconds(30))) {
     if (!rclcpp::ok()) {
@@ -51,7 +51,7 @@ PlannerClient::getPlan(
 
   auto future_result = get_plan_client_->async_send_request(request);
 
-  if (rclcpp::spin_until_future_complete(node_, future_result, std::chrono::seconds(15)) !=
+  if (rclcpp::spin_until_future_complete(node_, future_result, std::chrono::seconds(timeout)) !=
     rclcpp::FutureReturnCode::SUCCESS)
   {
     return {};

@@ -35,7 +35,7 @@ public:
 
   std::optional<plansys2_msgs::msg::Plan> getPlan(
     const std::string & domain, const std::string & problem,
-    const std::string & node_namespace = "");
+    const std::string & node_namespace = "", const int & timeout = 15);
 
 private:
   rclcpp::Client<plansys2_msgs::srv::GetPlan>::SharedPtr
